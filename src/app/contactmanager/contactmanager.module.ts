@@ -11,6 +11,7 @@ import { MainContentComponent } from './components/main-content/main-content.com
 import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 import { RouterModule, Routes } from '@angular/router';
+import { UserService } from './services/user.service';
 
 const routes: Routes = [
   {
@@ -35,5 +36,6 @@ const routes: Routes = [
     FormsModule,
     RouterModule.forChild(routes),
   ],
+  providers: [UserService],
 })
 export class ContactmanagerModule {}
