@@ -12,12 +12,16 @@ import { SidenavComponent } from './components/sidenav/sidenav.component';
 
 import { RouterModule, Routes } from '@angular/router';
 import { UserService } from './services/user.service';
+import { HttpClientModule } from '@angular/common/http';
 
 const routes: Routes = [
   {
     path: '',
     component: ContactmanagerAppComponent,
-    children: [{ path: '', component: MainContentComponent }],
+    children: [
+      { path: ':id', component: MainContentComponent },
+      { path: '', component: MainContentComponent },
+    ],
   },
   { path: '**', redirectTo: '' },
 ];
@@ -35,6 +39,7 @@ const routes: Routes = [
     FlexLayoutModule,
     FormsModule,
     RouterModule.forChild(routes),
+    HttpClientModule,
   ],
   providers: [UserService],
 })
