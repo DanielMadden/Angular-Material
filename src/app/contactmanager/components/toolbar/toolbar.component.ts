@@ -28,17 +28,16 @@ export class ToolbarComponent implements OnInit {
       width: '450px',
     });
 
-    let subscription = dialogRef.afterClosed().subscribe((result) => {
+    dialogRef.afterClosed().subscribe((result) => {
       console.log('the dialog was closed', result);
 
       if (result) {
-        let observableAction = this.openSnackBar(
-          'Contact added',
-          'Navigate'
-        ).onAction();
-        let subscription2 = observableAction.subscribe(() => {
-          this.router.navigate([`/contactmanager`, result.id]);
-        });
+        this.openSnackBar('Contact added', 'Navigate')
+          .onAction()
+          .subscribe(() => {
+            this.router.navigate([`/contactmanager`, result.id]);
+            console.log('logging this stupid subscription: ' + result.id);
+          });
       }
     });
   }

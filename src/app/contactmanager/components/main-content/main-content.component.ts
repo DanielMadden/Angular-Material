@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { User } from '../../models/user';
 import { UserService } from '../../services/user.service';
 
@@ -11,19 +11,24 @@ import { UserService } from '../../services/user.service';
 export class MainContentComponent implements OnInit {
   user: User;
 
-  constructor(private route: ActivatedRoute, private service: UserService) {}
+  constructor(
+    private route: ActivatedRoute,
+    private service: UserService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
     this.route.params.subscribe((params) => {
       let id = params['id'];
-      if (!id) id = 1;
       this.user = null;
-      this.service.users.subscribe((users) => {
+      let subscriptionUsers = this.service.users.subscribe((users) => {
+        // if (!users[id]) this.router.navigate(['/contactmanager' + 1]);
+        if (!id) id = 1;
         if (users.length == 0) return;
         setTimeout(() => {
           this.user = this.service.userById(id);
+          subscriptionUsers.unsubscribe();
         }, Math.floor(Math.random() * 700) + 100);
-        // this.user = this.service.userById(id);
       });
     });
   }
